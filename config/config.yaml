@@ -1,0 +1,43 @@
+storage: /verdaccio/storage/
+plugins: /verdaccio/storage/
+web:
+  title: 私有 NPM 仓库
+  pkgManagers:
+    - npm
+    - yarn
+    - pnpm
+  showFooter: false
+auth:
+  htpasswd:
+    file: ./htpasswd
+    algorithm: md5 # 这里选择 md5 作为加密算法
+    max_users: -1 # 不允许自由注册
+i18n:
+  web: zh-CN
+
+uplinks:
+  npmjs:
+    url: https://registry.npmjs.org/
+  yarn:
+    url: https://registry.yarnpkg.com/
+    timeout: 10s
+  taobao:
+    url: https://npmmirror.com/
+    timeout: 10s
+
+packages:
+  "@*/*":
+    access: $all
+    publish: $authenticated
+    unpublish: $authenticated
+    proxy: npmjs yarn taobao
+  "**":
+    access: $all
+    publish: $authenticated
+    unpublish: $authenticated
+    proxy: npmjs yarn taobao
+middlewares:
+  audit:
+    enabled: true
+listen: 0.0.0.0:4873
+log: { type: stdout, format: pretty, level: http }
