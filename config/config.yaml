@@ -15,12 +15,11 @@ auth:
 i18n:
   web: zh-CN
 
-notify: # 改写endpoint和对应手机号,创建机器人安全选项加关键词: NPM
+notify: # 1 修改发包的内网地址 2改写endpoint和对应手机号 3创建机器人安全选项加关键词: NPM
   method: POST
   headers: [{ "Content-Type": "application/json" }]
   endpoint: 钉钉机器人的webhooks地址
-  content: '{"msgtype":"text", "at": {"atMobiles": ["你的手机号"] }, "text":{"content":"NPM 发布新包：\n > 下载地址：http://192.168.200.143:4873/{{name}}/-/{{name}}-{{#each versions}}{{version}}{{/each}}.tgz \n > 包名称：{{name}} \n > 版本号：{{#each versions}}{{version}}{{/each}} \n > 发布者：{{publisher.name}} "}}'
-
+  content: '{"msgtype":"text", "at": {"atMobiles": [] }, "text":{"content":"NPM 发布新包：\n > 下载地址：http://你的内网ip:4873/{{name}}/-/{{name}}-{{#each versions}}{{version}}{{/each}}.tgz \n > 包名称：{{name}} \n > 版本号：{{#each versions}}{{version}}{{/each}} \n > 发布者：{{publisher.name}} "}}'
 uplinks:
   npmjs:
     url: https://registry.npmjs.org/
